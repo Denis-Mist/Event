@@ -34,6 +34,13 @@ func main() {
 
 		for msg := range pc.Messages() {
 			fmt.Printf("Received message: %s\n", string(msg.Value))
+			// Send the message to another server (e.g. using HTTP)
+			sendToAnotherServer(string(msg.Value))
 		}
 	}
+}
+
+func sendToAnotherServer(message string) {
+	// Implement sending the message to another server using HTTP or another protocol
+	fmt.Println("Sending message to another server:", message)
 }
