@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"models"
 	"utils"
+
+	"models"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {

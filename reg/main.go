@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/IBM/sarama"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
@@ -30,7 +31,16 @@ type User struct {
 	Email    string `json:"email"`
 }
 
+var kafkaProducer sarama.SyncProducer
+
 func main() {
+	var err error
+	kafkaProducer, err = sarama.NewSyncProducer([]string{"localhost:9092"}, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer kafkaProducer.Close()
+
 	r := mux.NewRouter()
 
 	r.HandleFunc("/register", Register).Methods("POST")
@@ -41,7 +51,7 @@ func main() {
 }
 
 func generateSecretKey() (string, error) {
-	b := make([]byte, 32) // 32 bytes is a good size for a secret key
+	b := make([]byte, 32)
 	_, err := rand.Read(b)
 	if err != nil {
 		return "", err
@@ -131,6 +141,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	msg := &sarama.ProducerMessage{
+		Topic: "users",
+		Value: sarama.StringEncoder(fmt.Sprintf("User created: %s", user.Username)),
+	}
+	_, _, err = kafkaProducer.SendMessage(msg)
+	if err != nil {
+		log.Println(err)
+	}
+
 	// Generate JWT token
 	token, err := GenerateToken(&user)
 	if err != nil {
@@ -169,6 +188,15 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		return
+	}
+
+	msg := &sarama.ProducerMessage{
+		Topic: "users",
+		Value: sarama.StringEncoder(fmt.Sprintf("User logged in: %s", foundUser.Username)),
+	}
+	_, _, err = kafkaProducer.SendMessage(msg)
+	if err != nil {
+		log.Println(err)
 	}
 
 	// Generate JWT token

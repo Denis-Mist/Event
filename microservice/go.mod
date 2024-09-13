@@ -8,7 +8,12 @@ require (
 )
 
 require (
-	github.com/IBM/sarama v1.43.3 // indirect
+	github.com/kr/text v0.2.0 // indirect
+	github.com/rogpeppe/go-internal v1.12.0 // indirect
+)
+
+require (
+	github.com/IBM/sarama v1.43.3
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"config"
+	"../config"
 )
 
 func createDatabaseIfNotExists() (*sql.DB, error) {
