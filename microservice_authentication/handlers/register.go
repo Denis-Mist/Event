@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"models"
-	"utils"
+	"microservice_authentication/utils"
+
+	"microservice_authentication/models"
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {

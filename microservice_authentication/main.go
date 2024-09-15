@@ -8,7 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 
-	"handlers"
+	"microservice_authentication/handlers"
 )
 
 func main() {

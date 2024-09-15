@@ -18,7 +18,7 @@ import (
 
 var DbData = map[string]string{
 	"host":     "localhost",
-	"port":     "5432",
+	"port":     "8080", //5432 стандарт нужен
 	"user":     "postgres",
 	"password": "ghbdtn",
 	"database": "users",
@@ -78,18 +78,17 @@ func GenerateToken(user *User) (string, error) {
 }
 
 func createDatabaseIfNotExists() (*sql.DB, error) {
-	db, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		DbData["host"], DbData["port"], DbData["user"], DbData["password"], DbData["database"]))
+	// Connect to the default database (usually 'postgres')
+	db, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=postgres sslmode=disable",
+		DbData["host"], DbData["port"], DbData["user"], DbData["password"]))
 	if err != nil {
 		return nil, err
 	}
+	defer db.Close()
 
 	// Check if the database exists
 	var exists bool
 	err = db.QueryRow("SELECT 1 FROM pg_database WHERE datname = $1", DbData["database"]).Scan(&exists)
-	if err != nil {
-		return nil, err
-	}
 
 	if !exists {
 		// Create the database
@@ -97,6 +96,16 @@ func createDatabaseIfNotExists() (*sql.DB, error) {
 		if err != nil {
 			return nil, err
 		}
+	}
+
+	// Close the connection to the default database
+	db.Close()
+
+	// Connect to the newly created database
+	db, err = sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		DbData["host"], DbData["port"], DbData["user"], DbData["password"], DbData["database"]))
+	if err != nil {
+		return nil, err
 	}
 
 	// Create the users table if it does not exist

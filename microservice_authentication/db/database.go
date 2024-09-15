@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"../config"
+	"microservice_authentication/config"
 )
 
 func createDatabaseIfNotExists() (*sql.DB, error) {
