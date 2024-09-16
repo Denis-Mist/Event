@@ -82,6 +82,7 @@ func main() {
 				fmt.Print("tuttut")
 				continue
 			}
+			fmt.Println(word)
 
 			// Store word in database
 			db, err := createDatabaseIfNotExists()
@@ -151,23 +152,35 @@ func makePostRequest(user *User, token string) (string, error) {
 	// Set the Authorization header to the JWT token
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
 
+	// Create a channel to wait for the response
+	ch := make(chan string)
+
 	// Send the request and get the response
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
+	go func() {
+		resp, err := client.Do(req)
+		if err != nil {
+			ch <- ""
+			return
+		}
+		defer resp.Body.Close()
 
-	// Parse the response body as a JSON object containing the word
-	var wordResponse struct {
-		Word string `json:"word"`
-	}
-	err = json.NewDecoder(resp.Body).Decode(&wordResponse)
-	if err != nil {
-		return "", err
-	}
+		// Parse the response body as a JSON object containing the word
+		var wordResponse struct {
+			Word string `json:"word"`
+		}
+		err = json.NewDecoder(resp.Body).Decode(&wordResponse)
+		if err != nil {
+			ch <- ""
+			return
+		}
 
-	return wordResponse.Word, nil
+		ch <- wordResponse.Word
+	}()
+
+	// Wait for the response to complete
+	word := <-ch
+
+	return word, nil
 }
 
 func createDatabaseIfNotExists() (*sql.DB, error) {
@@ -221,7 +234,17 @@ func generateSecretKey() (string, error) {
 
 func startServer() {
 	http.HandleFunc("/word", func(w http.ResponseWriter, r *http.Request) {
-		word := "example_word" // Replace with the actual word
+		var wordRequest struct {
+			Word string `json:"word"`
+		}
+
+		err := json.NewDecoder(r.Body).Decode(&wordRequest)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		word := wordRequest.Word
 		json.NewEncoder(w).Encode(map[string]string{"word": word})
 	})
 
