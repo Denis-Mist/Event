@@ -10,3 +10,7 @@
   "username": "johnDoe",
   "password": "mysecretpassword"
 }
+
+{
+  "word": "hello"
+}

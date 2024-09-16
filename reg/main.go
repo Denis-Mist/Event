@@ -1,9 +1,7 @@
 package main
 
 import (
-	"crypto/rand"
 	"database/sql"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -18,7 +16,7 @@ import (
 
 var DbData = map[string]string{
 	"host":     "localhost",
-	"port":     "8080", //5432 стандарт нужен
+	"port":     "5432", //5432 стандарт нужен
 	"user":     "postgres",
 	"password": "ghbdtn",
 	"database": "users",
@@ -51,12 +49,8 @@ func main() {
 }
 
 func generateSecretKey() (string, error) {
-	b := make([]byte, 32)
-	_, err := rand.Read(b)
-	if err != nil {
-		return "", err
-	}
-	return base64.StdEncoding.EncodeToString(b), nil
+	secret_key := "secret_key"
+	return secret_key, nil
 }
 
 func GenerateToken(user *User) (string, error) {
@@ -150,20 +144,27 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg := &sarama.ProducerMessage{
-		Topic: "users",
-		Value: sarama.StringEncoder(fmt.Sprintf("User created: %s", user.Username)),
-	}
-	_, _, err = kafkaProducer.SendMessage(msg)
-	if err != nil {
-		log.Println(err)
-	}
-
 	// Generate JWT token
 	token, err := GenerateToken(&user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+
+	// Send token to Kafka in JSON format
+	tokenJSON, err := json.Marshal(map[string]string{"token": token})
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	msg := &sarama.ProducerMessage{
+		Topic: "users",
+		Value: sarama.ByteEncoder(tokenJSON),
+	}
+	_, _, err = kafkaProducer.SendMessage(msg)
+	if err != nil {
+		log.Println(err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -199,20 +200,27 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg := &sarama.ProducerMessage{
-		Topic: "users",
-		Value: sarama.StringEncoder(fmt.Sprintf("User logged in: %s", foundUser.Username)),
-	}
-	_, _, err = kafkaProducer.SendMessage(msg)
-	if err != nil {
-		log.Println(err)
-	}
-
 	// Generate JWT token
 	token, err := GenerateToken(&foundUser)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+
+	// Send token to Kafka in JSON format
+	tokenJSON, err := json.Marshal(map[string]string{"token": token})
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	msg := &sarama.ProducerMessage{
+		Topic: "users",
+		Value: sarama.ByteEncoder(tokenJSON),
+	}
+	_, _, err = kafkaProducer.SendMessage(msg)
+	if err != nil {
+		log.Println(err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
