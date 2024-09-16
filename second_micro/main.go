@@ -1,12 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
-	"strings"
 
 	"github.com/IBM/sarama"
 	"github.com/dgrijalva/jwt-go"
@@ -53,6 +53,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	go startServer() // Start the server in a separate goroutine
+
 	for {
 		select {
 		case msg := <-topicPartitions.Messages():
@@ -61,6 +63,7 @@ func main() {
 			err := json.Unmarshal(msg.Value, &token)
 			if err != nil {
 				log.Println(err)
+				fmt.Print("tut")
 				continue
 			}
 
@@ -73,9 +76,10 @@ func main() {
 			}
 
 			// Make POST request to store word
-			word, err := makePostRequest(user)
+			word, err := makePostRequest(user, token.Token)
 			if err != nil {
 				log.Println(err)
+				fmt.Print("tuttut")
 				continue
 			}
 
@@ -129,27 +133,41 @@ func VerifyToken(token string) (*User, error) {
 	return user, nil
 }
 
-func makePostRequest(user *User) (string, error) {
+func makePostRequest(user *User, token string) (string, error) {
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", "http://localhost:8080/word", strings.NewReader(`{"word": ""}`))
+
+	// Create a new JSON object with the word field set to an empty string
+	wordJSON := []byte(`{"word": ""}`)
+
+	// Create a new request with the POST method and the word JSON object as the request body
+	req, err := http.NewRequest("POST", "http://localhost:8080/word", bytes.NewBuffer(wordJSON))
 	if err != nil {
 		return "", err
 	}
 
+	// Set the Content-Type header to application/json
 	req.Header.Set("Content-Type", "application/json")
+
+	// Set the Authorization header to the JWT token
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+
+	// Send the request and get the response
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
 
-	var word string
-	err = json.NewDecoder(resp.Body).Decode(&word)
+	// Parse the response body as a JSON object containing the word
+	var wordResponse struct {
+		Word string `json:"word"`
+	}
+	err = json.NewDecoder(resp.Body).Decode(&wordResponse)
 	if err != nil {
 		return "", err
 	}
 
-	return word, nil
+	return wordResponse.Word, nil
 }
 
 func createDatabaseIfNotExists() (*sql.DB, error) {
@@ -199,4 +217,13 @@ func createDatabaseIfNotExists() (*sql.DB, error) {
 func generateSecretKey() (string, error) {
 	secret_key := "secret_key"
 	return secret_key, nil
+}
+
+func startServer() {
+	http.HandleFunc("/word", func(w http.ResponseWriter, r *http.Request) {
+		word := "example_word" // Replace with the actual word
+		json.NewEncoder(w).Encode(map[string]string{"word": word})
+	})
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
