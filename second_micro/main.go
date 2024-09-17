@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -15,7 +16,7 @@ import (
 
 var DbData = map[string]string{
 	"host":     "localhost",
-	"port":     "5432",
+	"port":     "8080", // на 5432
 	"user":     "postgres",
 	"password": "ghbdtn",
 	"database": "words",
@@ -36,6 +37,7 @@ type User struct {
 
 type tokenStruct struct {
 	Token string `json:"token"`
+	Word  string `json:"word"`
 }
 
 var kafkaConsumer sarama.Consumer
@@ -63,7 +65,7 @@ func main() {
 			err := json.Unmarshal(msg.Value, &token)
 			if err != nil {
 				log.Println(err)
-				fmt.Print("tut")
+				fmt.Print("tut :)")
 				continue
 			}
 
@@ -76,29 +78,72 @@ func main() {
 			}
 
 			// Make POST request to store word
-			word, err := makePostRequest(user, token.Token)
-			if err != nil {
-				log.Println(err)
-				fmt.Print("tuttut")
-				continue
-			}
-			fmt.Println(word)
+			ch := make(chan struct{})
+			go func() {
+				wordResponse, err := makePostRequest(user, token.Token, token.Word)
+				if err != nil {
+					log.Println(err)
+					ch <- struct{}{}
+					return
+				}
 
-			// Store word in database
-			db, err := createDatabaseIfNotExists()
-			if err != nil {
-				log.Println(err)
-				continue
-			}
-			defer db.Close()
+				// Store word in database
+				db, err := createDatabaseIfNotExists()
+				if err != nil {
+					log.Println(err)
+					ch <- struct{}{}
+					return
+				}
+				defer db.Close()
 
-			_, err = db.Exec("INSERT INTO words (user_id, word) VALUES ($1, $2)", user.ID, word)
-			if err != nil {
-				log.Println(err)
-				continue
-			}
+				_, err = db.Exec("INSERT INTO words (user_id, word) VALUES ($1, $2)", user.ID, wordResponse)
+				if err != nil {
+					log.Println(err)
+					ch <- struct{}{}
+					return
+				}
+
+				ch <- struct{}{}
+			}()
+
+			// Wait for the response from the makePostRequest function
+			<-ch
 		}
 	}
+}
+
+func makePostRequest(user *User, token string, word string) (string, error) {
+	client := &http.Client{}
+
+	// Create a new JSON object with the word field set to the actual word
+	wordJSON := []byte(fmt.Sprintf(`{"word": "%s"}`, word))
+
+	// Create a new request with the POST method and the word JSON object as the request body
+	req, err := http.NewRequest("POST", "http://localhost:5050/word", bytes.NewBuffer(wordJSON))
+	if err != nil {
+		return "", err
+	}
+
+	// Set the Content-Type header to application/json
+	req.Header.Set("Content-Type", "application/json")
+
+	// Set the Authorization header to the JWT token
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	// Read the response body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	// Return the response body as a string
+	return string(body), nil
 }
 
 func VerifyToken(token string) (*User, error) {
@@ -132,55 +177,6 @@ func VerifyToken(token string) (*User, error) {
 	}
 
 	return user, nil
-}
-
-func makePostRequest(user *User, token string) (string, error) {
-	client := &http.Client{}
-
-	// Create a new JSON object with the word field set to an empty string
-	wordJSON := []byte(`{"word": ""}`)
-
-	// Create a new request with the POST method and the word JSON object as the request body
-	req, err := http.NewRequest("POST", "http://localhost:8080/word", bytes.NewBuffer(wordJSON))
-	if err != nil {
-		return "", err
-	}
-
-	// Set the Content-Type header to application/json
-	req.Header.Set("Content-Type", "application/json")
-
-	// Set the Authorization header to the JWT token
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
-
-	// Create a channel to wait for the response
-	ch := make(chan string)
-
-	// Send the request and get the response
-	go func() {
-		resp, err := client.Do(req)
-		if err != nil {
-			ch <- ""
-			return
-		}
-		defer resp.Body.Close()
-
-		// Parse the response body as a JSON object containing the word
-		var wordResponse struct {
-			Word string `json:"word"`
-		}
-		err = json.NewDecoder(resp.Body).Decode(&wordResponse)
-		if err != nil {
-			ch <- ""
-			return
-		}
-
-		ch <- wordResponse.Word
-	}()
-
-	// Wait for the response to complete
-	word := <-ch
-
-	return word, nil
 }
 
 func createDatabaseIfNotExists() (*sql.DB, error) {
@@ -248,5 +244,5 @@ func startServer() {
 		json.NewEncoder(w).Encode(map[string]string{"word": word})
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":5050", nil))
 }
