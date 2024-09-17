@@ -12,6 +12,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/jwt/v2"
 )
 
 var DbData = map[string]string{
@@ -56,7 +57,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	go startServer(app)
+	jwtSecretKey := []byte("secret_key")
+	contextKeyUser := "user"
+
+	authorizedGroup := app.Group("")
+	authorizedGroup.Use(jwt.New(jwt.Config{
+		SigningKey: jwtSecretKey,
+		ContextKey: contextKeyUser,
+	}))
+
+	go startServer(app, authorizedGroup)
 
 	for {
 		select {
@@ -205,19 +215,10 @@ func VerifyToken(token string) (*User, error) {
 	return user, nil
 }
 
-func startServer(app *fiber.App) {
-	app.Post("/word", func(c *fiber.Ctx) error {
-		var wordRequest struct {
-			Word string `json:"word"`
-		}
-
-		err := json.Unmarshal(c.Body(), &wordRequest)
-		if err != nil {
-			return c.Status(http.StatusBadRequest).SendString(err.Error())
-		}
-
-		word := wordRequest.Word
-		return c.JSON(map[string]string{"word": word})
+func startServer(app *fiber.App, authorizedGroup *fiber.Router) {
+	authorizedGroup.Get("/profile", func(c *fiber.Ctx) error {
+		user := c.Locals(contextKeyUser)
+		return c.JSON(user)
 	})
 
 	log.Fatal(app.Listen(":5050"))
@@ -233,8 +234,7 @@ func makePostRequest(user *User, token string) (string, error) {
 		return "", err
 	}
 
-	// Set the Content-Type header to application/json
-	req.Header.Set("Content-Type", "application/json")
+	// Set the Content-Type header to application/json req.Header.Set("Content-Type", "application/json")
 
 	// Set the Authorization header to the JWT token
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
