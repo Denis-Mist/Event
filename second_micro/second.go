@@ -10,12 +10,13 @@ import (
 
 	"github.com/IBM/sarama"
 	"github.com/dgrijalva/jwt-go"
-	_ "github.com/lib/pq"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 var DbData = map[string]string{
 	"host":     "localhost",
-	"port":     "5432", // на 5432
+	"port":     "5432",
 	"user":     "postgres",
 	"password": "ghbdtn",
 	"database": "words",
@@ -39,11 +40,12 @@ type tokenStruct struct {
 	Word  string `json:"word"`
 }
 
-var kafkaConsumer sarama.Consumer
-
 func main() {
-	var err error
-	kafkaConsumer, err = sarama.NewConsumer([]string{"localhost:9092"}, nil)
+	app := fiber.New()
+
+	app.Use(logger.New())
+
+	kafkaConsumer, err := sarama.NewConsumer([]string{"localhost:9092"}, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,7 +56,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	go startServer() // Start the server in a separate goroutine
+	go startServer(app)
 
 	for {
 		select {
@@ -121,81 +123,6 @@ func main() {
 	}
 }
 
-func makePostRequest(user *User, token string) (string, error) {
-	client := &http.Client{}
-
-	// Create a new request with the POST method
-	req, err := http.NewRequest("POST", "http://localhost:5050/word", nil)
-	if err != nil {
-		fmt.Print("sdjahfjsd")
-		return "", err
-	}
-
-	// Set the Content-Type header to application/json
-	req.Header.Set("Content-Type", "application/json")
-
-	// Set the Authorization header to the JWT token
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
-
-	// Read the response from the request
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println("tutaaaaaaaa")
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	// Read the response body
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("mozet tut")
-		return "", err
-	}
-
-	// Parse the response body as JSON
-	var wordResponseMap map[string]string
-	err = json.Unmarshal(body, &wordResponseMap)
-	if err != nil {
-		return "", err
-	}
-
-	// Return the word field from the JSON response
-	return wordResponseMap["word"], nil
-}
-
-func VerifyToken(token string) (*User, error) {
-	key, err := generateSecretKey()
-	if err != nil {
-		return nil, fmt.Errorf("failed to generate secret key: %w", err)
-	}
-
-	// Parse the JWT token and claims
-	tokenClaims, err := jwt.ParseWithClaims(token, &jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(key), nil
-	})
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse token: %w", err)
-	}
-
-	claims, ok := tokenClaims.Claims.(*jwt.MapClaims)
-	if !ok {
-		return nil, fmt.Errorf("failed to get claims from token")
-	}
-
-	// Check if the "id" claim exists and convert it
-	id, ok := (*claims)["id"].(float64)
-	if !ok {
-		return nil, fmt.Errorf("id claim is missing or invalid")
-	}
-
-	// Create user object
-	user := &User{
-		ID: uint(id),
-	}
-
-	return user, nil
-}
-
 func createDatabaseIfNotExists() (*sql.DB, error) {
 	// Connect to the default database (usually 'postgres')
 	db, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=postgres sslmode=disable",
@@ -245,21 +172,95 @@ func generateSecretKey() (string, error) {
 	return secret_key, nil
 }
 
-func startServer() {
-	http.HandleFunc("/word", func(w http.ResponseWriter, r *http.Request) {
+func VerifyToken(token string) (*User, error) {
+	key, err := generateSecretKey()
+	if err != nil {
+		return nil, fmt.Errorf("failed to generate secret key: %w", err)
+	}
+
+	// Parse the JWT token and claims
+	tokenClaims, err := jwt.ParseWithClaims(token, &jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(key), nil
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse token: %w", err)
+	}
+
+	claims, ok := tokenClaims.Claims.(*jwt.MapClaims)
+	if !ok {
+		return nil, fmt.Errorf("failed to get claims from token")
+	}
+
+	// Check if the "id" claim exists and convert it
+	id, ok := (*claims)["id"].(float64)
+	if !ok {
+		return nil, fmt.Errorf("id claim is missing or invalid")
+	}
+
+	// Create user object
+	user := &User{
+		ID: uint(id),
+	}
+
+	return user, nil
+}
+
+func startServer(app *fiber.App) {
+	app.Post("/word", func(c *fiber.Ctx) error {
 		var wordRequest struct {
 			Word string `json:"word"`
 		}
 
-		err := json.NewDecoder(r.Body).Decode(&wordRequest)
+		err := json.Unmarshal(c.Body(), &wordRequest)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
+			return c.Status(http.StatusBadRequest).SendString(err.Error())
 		}
 
 		word := wordRequest.Word
-		json.NewEncoder(w).Encode(map[string]string{"word": word})
+		return c.JSON(map[string]string{"word": word})
 	})
 
-	log.Fatal(http.ListenAndServe(":5050", nil))
+	log.Fatal(app.Listen(":5050"))
+}
+
+func makePostRequest(user *User, token string) (string, error) {
+	client := &http.Client{}
+
+	// Create a new request with the POST method
+	req, err := http.NewRequest("POST", "http://localhost:5050/word", nil)
+	if err != nil {
+		fmt.Print("sdjahfjsd")
+		return "", err
+	}
+
+	// Set the Content-Type header to application/json
+	req.Header.Set("Content-Type", "application/json")
+
+	// Set the Authorization header to the JWT token
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
+
+	// Read the response from the request
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("tutaaaaaaaa")
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	// Read the response body
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("mozet tut")
+		return "", err
+	}
+
+	// Parse the response body as JSON
+	var wordResponseMap map[string]string
+	err = json.Unmarshal(body, &wordResponseMap)
+	if err != nil {
+		return "", err
+	}
+
+	// Return the word field from the JSON response
+	return wordResponseMap["word"], nil
 }

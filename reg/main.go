@@ -17,7 +17,7 @@ import (
 
 var DbData = map[string]string{
 	"host":     "localhost",
-	"port":     "8080", //5432 стандарт нужен
+	"port":     "5432", //5432 стандарт нужен
 	"user":     "postgres",
 	"password": "ghbdtn",
 	"database": "users",
