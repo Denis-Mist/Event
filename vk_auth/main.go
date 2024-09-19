@@ -33,8 +33,8 @@ func main() {
 
 		// Use the person information to make the OAuth request
 		conf := &oauth2.Config{
-			ClientID:     "YOUR_CLIENT_ID",
-			ClientSecret: "YOUR_CLIENT_SECRET",
+			ClientID:     "1234567890",
+			ClientSecret: "abcdefghijklmnopqrstuvwxyz",
 			Scopes:       []string{"email", "profile"},
 			Endpoint: oauth2.Endpoint{
 				AuthURL:  "https://oauth.vk.com/authorize",
