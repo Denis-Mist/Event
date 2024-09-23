@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package db;
+option go_package = ".";
+
+service DatabaseService {
+  rpc GetIdByName(Name) returns (Id) {}
+}
+
+message Name {
+  string value = 1;
+}
+
+message Id {
+  int32 value = 1;
+}
