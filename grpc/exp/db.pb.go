@@ -20,16 +20,16 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Name struct {
+type GetDataRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *Name) Reset() {
-	*x = Name{}
+func (x *GetDataRequest) Reset() {
+	*x = GetDataRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_db_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -37,13 +37,13 @@ func (x *Name) Reset() {
 	}
 }
 
-func (x *Name) String() string {
+func (x *GetDataRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Name) ProtoMessage() {}
+func (*GetDataRequest) ProtoMessage() {}
 
-func (x *Name) ProtoReflect() protoreflect.Message {
+func (x *GetDataRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_db_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,28 +55,28 @@ func (x *Name) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Name.ProtoReflect.Descriptor instead.
-func (*Name) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetDataRequest.ProtoReflect.Descriptor instead.
+func (*GetDataRequest) Descriptor() ([]byte, []int) {
 	return file_db_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Name) GetValue() string {
+func (x *GetDataRequest) GetId() string {
 	if x != nil {
-		return x.Value
+		return x.Id
 	}
 	return ""
 }
 
-type Id struct {
+type GetDataResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Value int32 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	Data string `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
-func (x *Id) Reset() {
-	*x = Id{}
+func (x *GetDataResponse) Reset() {
+	*x = GetDataResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_db_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -84,13 +84,13 @@ func (x *Id) Reset() {
 	}
 }
 
-func (x *Id) String() string {
+func (x *GetDataResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Id) ProtoMessage() {}
+func (*GetDataResponse) ProtoMessage() {}
 
-func (x *Id) ProtoReflect() protoreflect.Message {
+func (x *GetDataResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_db_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -102,30 +102,33 @@ func (x *Id) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Id.ProtoReflect.Descriptor instead.
-func (*Id) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetDataResponse.ProtoReflect.Descriptor instead.
+func (*GetDataResponse) Descriptor() ([]byte, []int) {
 	return file_db_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Id) GetValue() int32 {
+func (x *GetDataResponse) GetData() string {
 	if x != nil {
-		return x.Value
+		return x.Data
 	}
-	return 0
+	return ""
 }
 
 var File_db_proto protoreflect.FileDescriptor
 
 var file_db_proto_rawDesc = []byte{
-	0x0a, 0x08, 0x64, 0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x02, 0x64, 0x62, 0x22, 0x1c,
-	0x0a, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x1a, 0x0a, 0x02,
-	0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x32, 0x34, 0x0a, 0x0f, 0x44, 0x61, 0x74, 0x61,
-	0x62, 0x61, 0x73, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x21, 0x0a, 0x0b, 0x47,
-	0x65, 0x74, 0x49, 0x64, 0x42, 0x79, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x08, 0x2e, 0x64, 0x62, 0x2e,
-	0x4e, 0x61, 0x6d, 0x65, 0x1a, 0x06, 0x2e, 0x64, 0x62, 0x2e, 0x49, 0x64, 0x22, 0x00, 0x42, 0x03,
-	0x5a, 0x01, 0x2e, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x0a, 0x08, 0x64, 0x62, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x08, 0x64, 0x61, 0x74, 0x61,
+	0x62, 0x61, 0x73, 0x65, 0x22, 0x20, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x25, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x44, 0x61, 0x74,
+	0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x32, 0x53, 0x0a,
+	0x0f, 0x44, 0x61, 0x74, 0x61, 0x62, 0x61, 0x73, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x12, 0x40, 0x0a, 0x07, 0x47, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x12, 0x18, 0x2e, 0x64, 0x61,
+	0x74, 0x61, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e, 0x64, 0x61, 0x74, 0x61, 0x62, 0x61, 0x73, 0x65,
+	0x2e, 0x47, 0x65, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x42, 0x03, 0x5a, 0x01, 0x2e, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -142,12 +145,12 @@ func file_db_proto_rawDescGZIP() []byte {
 
 var file_db_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_db_proto_goTypes = []any{
-	(*Name)(nil), // 0: db.Name
-	(*Id)(nil),   // 1: db.Id
+	(*GetDataRequest)(nil),  // 0: database.GetDataRequest
+	(*GetDataResponse)(nil), // 1: database.GetDataResponse
 }
 var file_db_proto_depIdxs = []int32{
-	0, // 0: db.DatabaseService.GetIdByName:input_type -> db.Name
-	1, // 1: db.DatabaseService.GetIdByName:output_type -> db.Id
+	0, // 0: database.DatabaseService.GetData:input_type -> database.GetDataRequest
+	1, // 1: database.DatabaseService.GetData:output_type -> database.GetDataResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -162,7 +165,7 @@ func file_db_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_db_proto_msgTypes[0].Exporter = func(v any, i int) any {
-			switch v := v.(*Name); i {
+			switch v := v.(*GetDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -174,7 +177,7 @@ func file_db_proto_init() {
 			}
 		}
 		file_db_proto_msgTypes[1].Exporter = func(v any, i int) any {
-			switch v := v.(*Id); i {
+			switch v := v.(*GetDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
