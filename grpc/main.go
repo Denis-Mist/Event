@@ -2,32 +2,37 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
 	"google.golang.org/grpc"
 
-	pb "grpc/exp"
+	pb "grpc/exp2" // assuming your proto file is in the same directory
 )
 
-type databaseService struct {
-	pb.UnimplementedDatabaseServiceServer
+type wordService struct {
+	pb.UnimplementedWordServiceServer // Add this line to embed the interface
 }
 
-func (s *databaseService) GetData(ctx context.Context, req *pb.GetDataRequest) (*pb.GetDataResponse, error) {
-	// implement your logic here
-	return &pb.GetDataResponse{Data: "some data"}, nil
+func (s *wordService) AddWord(ctx context.Context, req *pb.AddWordRequest) (*pb.AddWordResponse, error) {
+	// implement your logic to add a word here
+	// for demonstration purposes, I'll just return a success response
+	return &pb.AddWordResponse{Result: "Word added successfully"}, nil
 }
 
 func main() {
-	srv := grpc.NewServer()
-	pb.RegisterDatabaseServiceServer(srv, &databaseService{})
+	fmt.Println("Starting server...")
 
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatalf("Failed to listen: %v", err)
 	}
 
-	log.Printf("gRPC server listening on port 50051")
-	srv.Serve(lis)
+	srv := grpc.NewServer()
+	pb.RegisterWordServiceServer(srv, &wordService{})
+
+	if err := srv.Serve(lis); err != nil {
+		log.Fatalf("Failed to serve: %v", err)
+	}
 }
