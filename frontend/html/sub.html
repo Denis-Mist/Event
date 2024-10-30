@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento</title>
+    <link rel="stylesheet" href="../style/uslugi.css">
+</head>
+<body>
+    <header>
+        <a href="../html/index.html"><img class="header__logo" src="../source/logo.png" alt="#"></a>
+        <div class="header__right-side">
+            <ul class="nav__list">
+                <li class="nav__item">
+                    <a href="#" class="nav__link">
+                        Услуги
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#" class="nav__link">
+                        Партнерам
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#" class="nav__link">
+                        Отзывы
+                    </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#" class="nav__link">
+                        Контакты
+                    </a>
+                </li>
+            </ul>
+            <div class="header__login" id="btn-login">
+                <img class="login-logo" src="../source/login-logo.png" alt="#">
+                <p class="login-text">Вход</p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="main__first-view">
+                <p class="evento"><span class="greatVibes">Подписка</span> Evento</p>
+                <p class="evento-description">В чем преимущества нашей подписки?</p>
+            </div>
+            <ul class="main_benefits-list">
+                <li class="main_benefit">
+                    <h2 class="benefit-heading">
+                        Неограниченное количество мероприятий
+                    </h2>
+                    <p class="benefit-description">
+                        В Premium-плане подписки Вы сможете создавать мероприятия без ограничений (в обычном плане есть ограничение - 3 мероприятия в год)
+                    </p>
+                </li>
+                <li class="main_benefit">
+                    <h2 class="benefit-heading">
+                        ИИ-консультант
+                    </h2>
+                    <p class="benefit-description">
+                        Вам будет доступна работа с незаменимым помощником в генерации интересных идей и сценариев для мероприятий
+                    </p>
+                </li>
+                <li class="main_benefit">
+                    <h2 class="benefit-heading">
+                        Premium-шаблоны
+                    </h2>
+                    <p class="benefit-description">
+                        При создании приглашений для гостей Вы сможете выбрать понравившийся шаблон из большого ассортимента оригинальных заготовок
+                    </p>
+                </li>
+                <li class="main_benefit">
+                    <h2 class="benefit-heading">
+                        Доступ к нашей партнёрской сети
+                    </h2>
+                    <p class="benefit-description">
+                        С Premium-подпиской Вам откроется возможность организовать своё мероприятие с нашими партнёрами: воспользуйтесь площадкой партнёра или услугами специалистов (например, кейтеринг, флористы, фотографы и т.д.)
+                    </p>
+                </li>
+            </ul>
+            <p class="buy-description">
+                Приобретите Premium-план  по цене 299 рублей/месяц
+            </p>
+            <button class="buy-button">
+                Приобрести
+            </button>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer__content">
+                <div class="left-side">
+                    <!-- <img src="../source/logo.png" alt="#" class="footer-logo"> -->
+                    <div class="footer-social">
+                        <a href="#" class="social-link">
+                            <img src="../source/inst.png" alt="#" class="social-logo">
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="../source/youtube.png" alt="#" class="social-logo">
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="../source/phone.png" alt="#" class="social-logo">
+                        </a>
+                        <a href="#" class="social-link">
+                            <img src="../source/tg.png" alt="#" class="social-logo">
+                        </a>
+                    </div>
+                </div>
+                <p class="footer-evento">Evento</p>
+                <div class="footer__nav">
+                    <!-- <h3 class="footer__list-heading">Ссылки</h3> -->
+                    <ul class="footer__nav-list">
+                        <li class="footer__list-item">
+                            <a href="#" class="footer__nav-link">Авторизация</a>
+                        </li>
+                        <li class="footer__list-item">
+                            <a href="#" class="footer__nav-link">Создать мероприятие</a>
+                        </li>
+                        <li class="footer__list-item">
+                            <a href="#" class="footer__nav-link">Место проведения</a>
+                        </li>
+                        <li class="footer__list-item">
+                            <a href="#" class="footer__nav-link">Помощь организатора</a>
+                        </li>
+                        <li class="footer__list-item">
+                            <a href="#" class="footer__nav-link">Оставить отзыв</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div id="modal" class="modal">
+        <div class="wrapper">
+            <div id="closeModal" class="closeModal"></div>
+            <h2 class="form-heading">Добро пожаловать в <span class="welcome-evento">Evento!</span></h2>
+            <form action="#" class="form1">
+                <input type="name" placeholder="Имя пользователя">
+                <input type="password" placeholder="Пароль">
+                <a href="#" class="forgot">Забыли пароль?</a>
+                <button id="entry-btn">Войти</button>
+                <p class="or">Или</p>
+                <button id="vk-btn">Войти с ВК</button>
+                <p class="no-acc">Еще нет аккаунта в Evento?</p>
+                <button id="reg-btn">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>   
+    <div id="modal2" class="modal2">
+        <div class="wrapper2">
+            <div id="closeModal2" class="closeModal"></div>
+            <h2 class="form-heading">Регистрация в <span class="welcome-evento">Evento!</span></h2>
+            <form action="#" class="form2">
+                <p class="reg">Придумайте имя пользователя:</p>
+                <input type="name" placeholder="Имя пользователя">
+                <p class="reg">Укажите электронную почту:</p>
+                <input type="email" placeholder="Электронная почта">
+                <p class="reg">Придумайте пароль:</p>
+                <input type="password" placeholder="Пароль">
+                <p class="reg">Повторите пароль:</p>
+                <input type="password" placeholder="Повторите пароль">
+                <div class="fin-btn">
+                    <button id="fin-reg-btn">Зарегистрироваться</button>
+                </div>
+            </form>
+        </div>
+    </div> 
+    <script src="../js/main.js"></script> 
+</body>
+</html>
