@@ -1,0 +1,26 @@
+"github.com/IBM/sarama"
+
+{
+    "username": "johnDoe",
+    "password": "mysecretpassword",
+    "email": "johndoe@example.com"
+}
+
+{
+  "username": "johnDoe",
+  "password": "mysecretpassword"
+}
+
+{
+  "word": "hello"
+}
+
+grpcurl -plaintext -d '{"name": "JohnDoe"}' -v localhost:50051/DatabaseService/GetData
+
+var DbData = map[string]string{
+	"host":     "localhost",
+	"port":     "5432", //5432 стандарт нужен
+	"user":     "postgres",
+	"password": "ghbdtn",
+	"database": "users",
+}

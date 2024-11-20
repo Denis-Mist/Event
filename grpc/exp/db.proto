@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package database;
+option go_package = ".";
+
+service DatabaseService {
+    rpc GetData(GetDataRequest) returns (GetDataResponse) {}
+}
+
+message GetDataRequest {
+    string name = 1; // added a 'name' field to the request
+}
+
+message GetDataResponse {
+    string id = 1; // changed the response to return an 'id' field
+}
