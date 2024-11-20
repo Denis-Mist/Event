@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package word_service;
+
+option go_package = "."; // or specify a valid Go package path
+
+service WordService {
+  rpc AddWord(AddWordRequest) returns (AddWordResponse) {}
+}
+
+message AddWordRequest {
+  string user_id = 1;
+  string word = 2;
+}
+
+message AddWordResponse {
+  string result = 1;
+}
