@@ -8,7 +8,7 @@ document.getElementById('entry-btn').addEventListener('click', async () => {
     };
 
     try {
-        const response = await fetch('http://localhost:8080/api/Auth/SignIn', {
+        const response = await fetch('http://localhost:5240/api/Account/Login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
