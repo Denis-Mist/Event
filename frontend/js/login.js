@@ -8,7 +8,7 @@ document.getElementById('entry-btn').addEventListener('click', async () => {
     };
 
     try {
-        const response = await fetch('https://your-api-url.com/login', {
+        const response = await fetch('http://localhost:8080/api/Auth/SignIn', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,30 +36,30 @@ document.getElementById('entry-btn').addEventListener('click', async () => {
 });
 
 // Пример использования токена при нажатии на другую кнопку
-document.getElementById('some-other-btn').addEventListener('click', async () => {
-    const token = localStorage.getItem('jwtToken');
+// document.getElementById('some-other-btn').addEventListener('click', async () => {
+//     const token = localStorage.getItem('jwtToken');
 
-    if (!token) {
-        alert('Пожалуйста, войдите в систему.');
-        return;
-    }
+//     if (!token) {
+//         alert('Пожалуйста, войдите в систему.');
+//         return;
+//     }
 
-    // Используйте токен для выполнения защищенного запроса
-    try {
-        const response = await fetch('https://your-api-url.com/protected-resource', {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        });
+//     // Используйте токен для выполнения защищенного запроса
+//     try {
+//         const response = await fetch('https://your-api-url.com/protected-resource', {
+//             method: 'GET',
+//             headers: {
+//                 'Authorization': 'Bearer ' + token
+//             }
+//         });
 
-        if (!response.ok) {
-            throw new Error('Ошибка доступа к ресурсу: ' + response.statusText);
-        }
+//         if (!response.ok) {
+//             throw new Error('Ошибка доступа к ресурсу: ' + response.statusText);
+//         }
 
-        const data = await response.json();
-        console.log('Данные:', data);
-    } catch (error) {
-        console.error('Ошибка:', error);
-    }
-});
+//         const data = await response.json();
+//         console.log('Данные:', data);
+//     } catch (error) {
+//         console.error('Ошибка:', error);
+//     }
+// });
