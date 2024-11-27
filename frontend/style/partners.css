@@ -1,0 +1,77 @@
+body {
+    background: linear-gradient(#EDC7B7, #FDF6EC);
+    background-attachment: fixed;
+}
+
+header {
+    margin-bottom: 170px;
+}
+
+.main__first-view {
+    text-align: center;
+}
+
+.forPartners {
+    font-family: "Great Vibes", cursive;
+    font-size: 128px;
+    color: #E7717D;
+}
+
+.forPartners-description {
+    font-family: "Great Vibes", cursive;
+    font-size: 40px;
+    margin-bottom: 230px;
+}
+
+.aboutUs {
+    font-family: "Great Vibes", cursive;
+    font-size: 48px;
+    color: #E7717D;
+}
+
+.aboutUs-description {
+    font-size: 28px;
+    margin-bottom: 80px;
+}
+
+.why {
+    font-family: "Great Vibes", cursive;
+    font-size: 48px;
+    color: #E7717D;
+    margin-bottom: 20px;
+}
+
+.cards__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+.card {
+    width: 370px;
+    border-radius: 15px;
+    text-align: center;
+    padding: 25px;
+    background-color: #efd4c9;
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(231,113,125,0.3);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(231,113,125,0.3);
+    box-shadow: 1px 1px 10px 0px rgba(231,113,125,0.3);
+}
+
+.card-img {
+    width: 330px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.card__heading {
+    font-family: "Great Vibes", cursive;
+    font-size: 36px;
+    color: #E7717D;
+}
+
+.card__description {
+    font-size: 22px;
+}

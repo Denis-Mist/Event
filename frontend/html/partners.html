@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/footer.css">
     <link rel="stylesheet" href="../style/modal.css">
-    <link rel="stylesheet" href="../style/sub.css">
+    <link rel="stylesheet" href="../style/partners.css">
 </head>
 <body>
     <header>
@@ -17,7 +17,7 @@
         <div class="header__right-side">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a href="#" class="nav__link">
+                    <a href="../html/sub.html" class="nav__link">
                         Услуги
                     </a>
                 </li>
@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="nav__item">
-                    <a href="#" class="nav__link">
+                    <a href="../html/feedback.html" class="nav__link">
                         Отзывы
                     </a>
                 </li>
@@ -46,49 +46,31 @@
     <main>
         <div class="container">
             <div class="main__first-view">
-                <p class="evento"><span class="greatVibes">Подписка</span> Evento</p>
-                <p class="evento-description">В чем преимущества нашей подписки?</p>
+                <p class="forPartners">Партнерам</p>
+                <p class="forPartners-description">Создай свой идеальный праздник!</p>
             </div>
-            <ul class="main_benefits-list">
-                <li class="main_benefit">
-                    <h2 class="benefit-heading">
-                        Неограниченное количество мероприятий
-                    </h2>
-                    <p class="benefit-description">
-                        В Premium-плане подписки Вы сможете создавать мероприятия без ограничений (в обычном плане есть ограничение - 3 мероприятия в год)
-                    </p>
-                </li>
-                <li class="main_benefit">
-                    <h2 class="benefit-heading">
-                        ИИ-консультант
-                    </h2>
-                    <p class="benefit-description">
-                        Вам будет доступна работа с незаменимым помощником в генерации интересных идей и сценариев для мероприятий
-                    </p>
-                </li>
-                <li class="main_benefit">
-                    <h2 class="benefit-heading">
-                        Premium-шаблоны
-                    </h2>
-                    <p class="benefit-description">
-                        При создании приглашений для гостей Вы сможете выбрать понравившийся шаблон из большого ассортимента оригинальных заготовок
-                    </p>
-                </li>
-                <li class="main_benefit">
-                    <h2 class="benefit-heading">
-                        Доступ к нашей партнёрской сети
-                    </h2>
-                    <p class="benefit-description">
-                        С Premium-подпиской Вам откроется возможность организовать своё мероприятие с нашими партнёрами: воспользуйтесь площадкой партнёра или услугами специалистов (например, кейтеринг, флористы, фотографы и т.д.)
-                    </p>
-                </li>
-            </ul>
-            <p class="buy-description">
-                Приобретите Premium-план  по цене 299 рублей/месяц
-            </p>
-            <button class="buy-button">
-                Приобрести
-            </button>
+            <h2 class="aboutUs">О нас</h2>
+            <p class="aboutUs-description">Наша компания бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла бла</p>
+            <h2 class="why">Почему стоит стать нашим партнером?</h2>
+            <div class="cards">
+                <ul class="cards__list">
+                    <li class="card">
+                        <img class="card-img" src="../source/partners-card1.jpg" alt="#">
+                        <h3 class="card__heading">Широкая аудитория</h3>
+                        <p class="card__description">Мы работаем с разнообразными клиентами, что предоставляет вам возможность расширить свою клиентскую базу.</p>
+                    </li>
+                    <li class="card">
+                        <img class="card-img" src="../source/partners-card2.jpg" alt="#">
+                        <h3 class="card__heading">Совместные проекты</h3>
+                        <p class="card__description">У нас есть возможность организовывать совместные мероприятия, что позволит вам продемонстрировать свои услуги широкой аудитории.</p>
+                    </li>
+                    <li class="card">
+                        <img class="card-img" src="../source/partners-card3.jpg" alt="#">
+                        <h3 class="card__heading">Поддержка и ресурсы</h3>
+                        <p class="card__description">Мы предлагаем нашим партнерам доступ к нашим ресурсам, включая маркетинговые материалы, инструменты для организации мероприятий и многое другое.</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </main>
     <footer>
@@ -140,8 +122,8 @@
             <div id="closeModal" class="closeModal"></div>
             <h2 class="form-heading">Добро пожаловать в <span class="welcome-evento">Evento!</span></h2>
             <form action="#" class="form1">
-                <input type="name" placeholder="Имя пользователя">
-                <input type="password" placeholder="Пароль">
+                <input type="name" id="login" placeholder="Имя пользователя">
+                <input type="password" id="password" placeholder="Пароль">
                 <a href="#" class="forgot">Забыли пароль?</a>
                 <button id="entry-btn">Войти</button>
                 <p class="or">Или</p>
@@ -171,5 +153,6 @@
         </div>
     </div> 
     <script src="../js/main.js"></script> 
+    <script src="../js/login.js"></script>
 </body>
 </html>
