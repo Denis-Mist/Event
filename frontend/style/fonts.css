@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+* {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+    color: #5B301E;
+}
+
+.greatVibes {
+    font-family: "Great Vibes", cursive;
+    font-size: 120px;
+    color: #E7717D;
+}

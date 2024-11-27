@@ -1,0 +1,32 @@
+p {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+
+.container {
+    padding-left: 64px;
+    padding-right: 64px;
+}

@@ -1,0 +1,50 @@
+.footer__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.footer-logo {
+    width: 70px;
+    margin-bottom: 36px;
+}
+
+.social-logo {
+    width: 50px;
+    margin-right: 20px;
+}
+
+.footer-evento {
+    font-family: "Alex Brush", cursive;
+    font-size: 150px;
+    color: #E7717D;
+}
+
+.footer__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.footer__nav {
+    width: 280px;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+.footer__list-heading {
+    font-size: 32px;
+    margin-bottom: 16px;
+    color: #E7717D;
+}
+
+.footer__list-item {
+    margin-bottom: 10px;
+}
+
+.footer__nav-link {
+    font-size: 26px;
+    color: #E7717D;
+}

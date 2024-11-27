@@ -1,0 +1,188 @@
+.modal {
+    display: none;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.5); 
+}
+
+.wrapper {
+    position: relative;
+    width: 30%;
+    height: 440px;
+    background-color: #edcdc0;
+    border: 1px solid #E7717D;
+    border-radius: 10px;
+    padding: 30px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-top: 40px;
+    margin: 7% auto;
+}
+
+.form1 {
+    text-align: center;
+}
+
+.form-heading {
+    font-family: "Great Vibes", cursive;
+    font-size: 32px;
+    color: #5B301E;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.form1 input {
+    width: 400px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid #E7717D;
+    margin-top: 15px;
+}
+
+.form1 input::placeholder {
+    color: #E7717D;
+    padding: 8px;
+}
+
+.forgot {
+    display: block;
+    color: #E7717D;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-decoration: underline;
+}
+
+.form1 button {
+    width: 400px;
+    font-size: 26px;
+    padding: 5px;
+    background-color: #E7717D;
+    color: #FDF6EC;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.or {
+    margin-bottom: 10px;
+}
+
+.no-acc {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal2 {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.5); 
+}
+
+.wrapper2 {
+    position: relative;
+    width: 30%;
+    height: 440px;
+    background-color: #edcdc0;
+    border: 1px solid #E7717D;
+    border-radius: 10px;
+    padding: 30px;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-top: 40px;
+    margin: 7% auto;
+}
+
+.form2 input {
+    width: 450px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid #E7717D;
+    margin-bottom: 10px;
+}
+
+.form2 input::placeholder {
+    color: #E7717D;
+    padding: 8px;
+}
+
+.form2 button {
+    width: 400px;
+    font-size: 26px;
+    padding: 5px;
+    background-color: #E7717D;
+    color: #FDF6EC;
+    border: none;
+    border-radius: 8px;
+}
+
+.reg {
+    margin-bottom: 2px;
+}
+
+.fin-btn {
+    text-align: center;
+}
+
+#fin-reg-btn {
+    margin-top: 20px;
+}
+
+/* cross */
+.closeModal {
+	position: absolute;
+	top: 30px;
+	right: 20px;
+	width: 24px;
+	height: 24px;
+	opacity: 0.3;
+	cursor: pointer;
+  transition: opacity ease 0.5s;
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.closeModal::before,
+.closeModal::after {
+	content: '';
+	position: absolute;
+	top: 10px;
+	display: block;
+	width: 24px;
+	height: 3px;
+	background: #E7717D;
+}
+
+.closeModal::before {
+	transform: rotate(45deg);
+}
+
+.closeModal::after {
+	transform: rotate(-45deg);
+}
+
+.welcome-evento {
+    font-family: "Alex Brush", cursive;
+    font-size: 32px;
+    color: #E7717D;
+    margin-bottom: 10px;
+    text-align: center;
+}
