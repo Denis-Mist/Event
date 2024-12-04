@@ -47,11 +47,12 @@
     border-radius: 8px;
     border: 2px solid #E7717D;
     margin-top: 15px;
+    padding-left: 15px;
 }
 
 .form1 input::placeholder {
     color: #E7717D;
-    padding: 8px;
+    /* padding: 8px; */
 }
 
 .forgot {
@@ -115,11 +116,12 @@
     border-radius: 8px;
     border: 2px solid #E7717D;
     margin-bottom: 10px;
+    padding-left: 15px;
 }
 
 .form2 input::placeholder {
     color: #E7717D;
-    padding: 8px;
+    /* padding: 8px; */
 }
 
 .form2 button {

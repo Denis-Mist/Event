@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <img class="header__logo" src="../source/logo.png" alt="#">
+        <a href="../html/index.html"><img class="header__logo" src="../source/logo.png" alt="#"></a>
         <div class="header__right-side">
             <ul class="nav__list">
                 <li class="nav__item">
@@ -44,20 +44,21 @@
         </div>
     </header>
     <main>
+        <h2 class="aboutUs-heading">Что говорят о нас:</h2>
         <div class="slider">
             <div class="slides">
                 <div class="slide active">
-                    <img src="../source/ex1.jpg" alt="Слайд 1">
+                    <img src="../source/feedback.png" alt="Слайд 1">
                 </div>
                 <div class="slide">
-                    <img src="../source/ex2.jpg" alt="Слайд 2">
+                    <img src="../source/feedback.png" alt="Слайд 2">
                 </div>
                 <div class="slide">
-                    <img src="../source/ex3.jpg" alt="Слайд 3">
+                    <img src="../source/feedback.png" alt="Слайд 3">
                 </div>
             </div>
-            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-            <button class="next" onclick="changeSlide(1)">&#10095;</button>
+            <button class="prev slider-btn" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="next slider-btn" onclick="changeSlide(1)">&#10095;</button>
         </div>
     </main>
 

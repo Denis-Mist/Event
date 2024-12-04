@@ -4,16 +4,31 @@ body {
 }
 
 header {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+}
+
+.aboutUs-heading {
+    font-family: "Great Vibes", cursive;
+    color: #E7717D;
+    font-size: 60px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 /* Slider */
 
 .slider {
     position: relative;
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
     overflow: hidden;
+    margin-bottom: 75px;
+    border-radius: 20px;
+    border: 2px solid #E7717D;
+
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(231,113,125,0.3);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(231,113,125,0.3);
+    box-shadow: 1px 1px 10px 0px rgba(231,113,125,0.3);
 }
 
 .slides {
@@ -31,7 +46,7 @@ header {
     display: block;
 }
 
-button {
+.slider-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

@@ -4,9 +4,15 @@ const reg_btn = document.getElementById("reg-btn");
 const closeModal = document.getElementById("closeModal");
 const closeModal2 = document.getElementById("closeModal2");
 
+const buy_btn = document.getElementById("buy-btn");
+
 btn_login.onclick = ()=>{
     modal.style.display = "block";
 }
+
+// buy_btn.onclick = ()=>{
+//     modal.style.display = "block";
+// }
 
 reg_btn.onclick = ()=>{
     modal.style.display = "none";

@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="nav__item">
-                    <a href="../html/feedback.html" class="nav__link">
+                    <a href="#" class="nav__link">
                         Отзывы
                     </a>
                 </li>
@@ -86,7 +86,7 @@
             <p class="buy-description">
                 Приобретите Premium-план  по цене 299 рублей/месяц
             </p>
-            <button class="buy-button" id="buy-btn">
+            <button class="buy-button" id="purch-btn">
                 Приобрести
             </button>
         </div>
@@ -170,6 +170,33 @@
             </form>
         </div>
     </div> 
+    <div id="modal3" class="modal">
+        <div class="purch-wrap">
+            <div id="closeModal3" class="closeModal"></div>
+            <h2 class="form-heading">Выберите тип оплаты</h2>
+            <button class="purchase-btn">СБП</button>
+            <button class="purchase-btn" id="purch-card-btn">Карта</button>
+            <button class="purchase-btn">MirPay</button>
+        </div>
+    </div> 
+    <div id="modal4" class="modal">
+        <div class="purch-wrap2">
+            <div id="closeModal4" class="closeModal"></div>
+            <form action="#" class="purch-form">
+                <h2 class="form-heading">Карта</h2>
+                <input type="number" class="purch-input number-input" placeholder="Номер карты">
+                <div class="dateCVV">
+                    <input type="month" class="purch-input date-input">
+                    <input type="password" class="purch-input cvv-input" placeholder="CVV">
+                </div>
+                <input type="text" class="name-input" placeholder="Ivanov Ivan">
+                <div class="purch-submit">
+                    <button class="purch-submit-btn">Оплатить</button>
+                </div>
+            </form>
+        </div>
+    </div> 
     <script src="../js/main.js"></script> 
+    <script src="../js/sub.js"></script> 
 </body>
 </html>
