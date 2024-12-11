@@ -29,6 +29,7 @@ document.getElementById('entry-btn').addEventListener('click', async () => {
         alert('Вход выполнен успешно!');
 
         // Здесь можно добавить логику для перехода на другую страницу или выполнения других действий
+        window.location.href = '../html/subAfterAuth.html';
     } catch (error) {
         console.error('Ошибка:', error);
         alert('Не удалось войти. Проверьте логин и пароль.');
