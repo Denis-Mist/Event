@@ -316,3 +316,6 @@ C:\Users\novoz\Git_project\Event\Auth\Auth\Auth\bin\Debug\net8.0\zh-Hans\Microso
 C:\Users\novoz\Git_project\Event\Auth\Auth\Auth\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\novoz\Git_project\Event\Auth\Auth\Auth\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\novoz\Git_project\Event\Auth\Auth\Auth\bin\Debug\net8.0\appsettings.json
+C:\Users\novoz\Git_project\Event\Auth\Auth\Auth\bin\Debug\net8.0\Auth.staticwebassets.endpoints.json
+C:\Users\novoz\Git_project\Event\Auth\Auth\Auth\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\novoz\Git_project\Event\Auth\Auth\Auth\obj\Debug\net8.0\staticwebassets\msbuild.Auth.Microsoft.AspNetCore.StaticWebAssetEndpoints.props

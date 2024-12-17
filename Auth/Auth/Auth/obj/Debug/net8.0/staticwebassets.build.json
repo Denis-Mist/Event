@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "qlPND0BObSAlvRTqFR8QAQzPblSKwpwZf749k0jM9SA=",
+  "Hash": "zPkiVmhspJeKtL0Gqy4tbpLVomt/tEIknZm0rWKcooc=",
   "Source": "Auth",
   "BasePath": "_content/Auth",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
